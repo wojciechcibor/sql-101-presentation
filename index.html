@@ -345,6 +345,13 @@ SELECT * FROM Ksiazki WHERE Autor IS NOT NULL;</code></pre>
 			<!--Slide 7-->
 			<section>
 				<h3>Klauzule LIMIT/OFFSET</h3>
+				<small>Klauzula <span class="red">limit</span> ogranicza liczb˛e rekordów w wyniku.</small>
+				<small>Klauzula <span class="red">offset</span> wskazuje ile pierwszych wyników ma zostac pominiętych.</small>
+
+				<h4><br>Przykłady</h4>
+				<pre><code class="sql" data-trim>SELECT * FROM Ksiazki ORDER BY Cena LIMIT 10;</code></pre>
+				<pre><code class="sql" data-trim>SELECT * FROM Ksiazki ORDER BY Cena OFFSET 5;</code></pre>
+				<pre><code class="sql" data-trim>SELECT * FROM Ksiazki ORDER BY Cena LIMIT 5 OFFSET 5;</code></pre>
 			</section>
 
 			<!--Slide 8-->
@@ -396,7 +403,7 @@ przed obliczaniem wartosci funkcji agregującej </small>
 						</tr>
 					</tbody>
 				</table>
-				<div class="fragment" style="margin-top:20px;">
+				<div style="margin-top:20px;">
 					<h4>Przykład</h4>
 					<pre><code class="sql" data-trim>SELECT count(*) FROM Ksiazki;</code></pre>
 				</div>
