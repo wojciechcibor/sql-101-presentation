@@ -328,6 +328,13 @@ SELECT * FROM Ksiazki WHERE Autor IS NOT NULL;</code></pre>
 			<!--Slide 7-->
 			<section>
 				<h3>Sortowanie wyników</h3>
+				<small> Sortowanie wyników realizowane jest przez klauzulę <span class="white">ORDER BY</span>, która powinna być umieszczana na koncu instrukcji <span class="white">SELECT</span>.
+					Domyslnym sortowaniem jest sortowanie ´ rosnące (opcja ASC – ascending).
+				</small>
+				<h4><br>Przykłady</h4>
+				<pre><code class="sql" data-trim>SELECT * FROM Ksiazki ORDER BY Cena;</code></pre>
+				<pre><code class="sql" data-trim>SELECT * FROM Ksiazki ORDER BY Cena DESC;</code></pre>
+				<pre><code class="sql" data-trim>SELECT * FROM Ksiazki ORDER BY Cena DESC, Tytul;</code></pre>
 			</section>
 
 			<!--Slide 7-->
@@ -343,7 +350,10 @@ SELECT * FROM Ksiazki WHERE Autor IS NOT NULL;</code></pre>
 			<!--Slide 8-->
 			<section>
 				<h3>Funkcje Agregujące</h3>
-				<table style="font-size:20px; background-color:white;color: black;">
+				<small>Funkcja agregująca nie może wystąpic w klauzuli <span class="white"> WHERE</span>. Klauzula <span class="white"> WHERE </span> decyduje o tym, które krotki zostaną użyte do obliczeń z funkcją agregującą i jest obliczana 
+przed obliczaniem wartosci funkcji agregującej </small>
+
+				<table style="font-size:20px; background-color:white;color: black; margin-top:20px;">
 					<thead>
 						<tr>
 							<th>Nazwa funkcji</th>
@@ -386,9 +396,7 @@ SELECT * FROM Ksiazki WHERE Autor IS NOT NULL;</code></pre>
 						</tr>
 					</tbody>
 				</table>
-
-				<div class="fragment">
-					<br>
+				<div class="fragment" style="margin-top:20px;">
 					<h4>Przykład</h4>
 					<pre><code class="sql" data-trim>SELECT count(*) FROM Ksiazki;</code></pre>
 				</div>
