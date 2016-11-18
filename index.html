@@ -81,93 +81,189 @@
 			<!--Slide 3-->
 			<section>
 				<section>
-					<h2>Data Definition Language - Składnia</h2> <br>
-					<pre><code class="sql" data-trim>CREATE TABLE Ksiazki(
+					<h3>Data Definition Language</h3> <br>
+					<h4>Składnia</h4>
+					<pre><code class="sql" data-trim>CREATE TABLE nazwa_tabeli
+  ({nazwa_kolumny typ [ograniczenia_dla_kolumny] [,...] }
+  [CONSTRAINT ograniczenia_dla_tabeli])
+</code></pre>
+
+					<div class="fragment">
+						<h4>Przykład</h4>
+						<pre><code class="sql" data-trim>CREATE TABLE Ksiazki(
  Id INTEGER PRIMARY KEY,
  Autor VARCHAR(50),
  Tytul VARCHAR(50) NOT NULL,
  Cena NUMERIC(18,2) NOT NULL
 );</code></pre>
+					</div>
 				</section>
 
 				<section>
-					<h3>SQL - Typy danych</h2>
-						<div style="float:left;">
-							<p>
-								Typy znakowe:
-								<ul style="font-size:20px;" class="white">
-									<li><code>CHAR<i>(n)</i></code></li>
-									<li><code>VARCHAR<i>(n)</i></code></li>
-									<li><code>NCHAR<i>(n)</i></code></li>
-									<li><code>NVARCHAR<i>(n)</i></code></li>
-								</ul>
-							</p>
-						</div>
-						<div style="float:left; margin-left:50px;" class="fragment">
-							<p>
-								Typy liczbowe:
-								<ul style="font-size:20px;" class="white">
-									<li><code>INTEGER</code></li>
-									<li><code>FLOAT</code></li>
-									<li><code>NUMERIC<i>(precision,scale)</i></code></li>
-								</ul>
-							</p>
-						</div>
+					<h3>SQL - Typy danych</h3>
+					<div style="float:left;">
+						<p>
+							Typy znakowe:
+							<ul style="font-size:20px;" class="white">
+								<li><code>CHAR<i>(n)</i></code></li>
+								<li><code>VARCHAR<i>(n)</i></code></li>
+								<li><code>NCHAR<i>(n)</i></code></li>
+								<li><code>NVARCHAR<i>(n)</i></code></li>
+							</ul>
+						</p>
+					</div>
+					<div style="float:left; margin-left:50px;" class="fragment">
+						<p>
+							Typy liczbowe:
+							<ul style="font-size:20px;" class="white">
+								<li><code>INTEGER</code></li>
+								<li><code>FLOAT</code></li>
+								<li><code>NUMERIC<i>(precision,scale)</i></code></li>
+							</ul>
+						</p>
+					</div>
 
-						<div style="float:left; margin-left:50px;" class="fragment">
-							<p>
-								Temporal (data/czas):
-								<ul style="font-size:20px;" class="white">
-									<li><code>DATE</code></li>
-									<li><code>TIME</code></li>
-									<li><code>TIMESTAMP</code></li>
-								</ul>
-							</p>
-						</div>
+					<div style="float:left; margin-left:50px;" class="fragment">
+						<p>
+							Temporal (data/czas):
+							<ul style="font-size:20px;" class="white">
+								<li><code>DATE</code></li>
+								<li><code>TIME</code></li>
+								<li><code>TIMESTAMP</code></li>
+							</ul>
+						</p>
+					</div>
 
-						<div style="clear:both;"></div>
+					<div style="clear:both;"></div>
 
-						<div style="margin-left:50px;" class="fragment">
-							<p>
-								Typ logiczny
-								<ul style="font-size:20px;" class="white">
-									<li><code>BIT</code></li>
-								</ul>
-							</p>
-						</div>
+					<div style="margin-left:50px;" class="fragment">
+						<p>
+							Typ logiczny
+							<ul style="font-size:20px;" class="white">
+								<li><code>BIT</code></li>
+							</ul>
+						</p>
+					</div>
 
 				</section>
 
+				<section>
+					<h3>Ograniczenia dla kolumn</h3>
+					<ul style="font-size:26px;" class="white">
+						<li><code class="red">not null</code> - w kolumnie nie mogą być zapisywane wartości null</li>
+						<li><code class="red">unique</code> - wartosci zapisywane w kolumnie muszą być różne dla każdego wiersza w tabeli</li>
+						<li><code class="red">primary key</code> - klucz podstawowy (w zasadzie jest to połączenie zawężeń not null oraz unique).
+							Tworząc złozony klucz podstawowy, należy wykorzystać ograniczenia na poziomie tabeli</li>
+						<li><code class="red">default <span class="yellow">wartość</span></code> - zdefiniowanie wartosci domyślnej</li>
+						<li><code class="red">check <span class="yellow">(warunek)</span></code> - warunek sprawdzany w czasie wprowadzania lub
+							aktualizacji danych</li>
+						<li><code class="red">references</code> - ograniczenia kluczy obcych</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Ograniczenia dla tabeli</h3>
+					<ul style="font-size:26px;" class="white">
+						<li><code class="red">unique <span class="yellow">(lista kolumn)</span></code> - wartość musi być unikalna dla każdego
+							wiersza
+						</li>
+						<li><code class="red">primary key <span class="yellow">(lista kolumn)</span></code> - klucz główny</li>
+						<li><code class="red">check <span class="yellow">(warunek)</span></code> - warunek sprawdzany w czasie wprowadzania lub
+							aktualizacji danych</li>
+						<li><code class="red">references</code> - ograniczenia kluczy obcych</li>
+					</ul>
+				</section>
 			</section>
 
 			<!--Slide 4-->
 			<section>
-			<section>
-				<h2>Data Manipulation Language - Składnia</h2> <br>
-				<pre><code class="sql" data-trim>INSERT INTO Ksiazki ('Autor', 'Tytul', 'Cena') 
+				<section>
+					<h3>Data Manipulation Language - INSERT</h3> <br>
+					<h4>Składnia</h4>
+					<pre><code class="sql" data-trim>INSERT INTO tabela VALUES(lista wartości);
+INSERT INTO tabela(lista atrybutów) VALUES(lista wartości);</code></pre>
+
+					<div class="fragment">
+						<h4>Przykład</h4>
+						<pre><code class="sql" data-trim>INSERT INTO Ksiazki ('Autor', 'Tytul', 'Cena') 
   VALUES ('Joseph Heller', 'Paragraf 22', 19.99);
   
 INSERT INTO Ksiazki ('Tytul', 'Cena') 
   VALUES ('Biblia', 199.99);</code></pre>
-			</section>
+					</div>
 
-						<section>
-				<h2>Data Manipulation Language - Składnia</h2> <br>
-				<pre><code class="sql" data-trim>INSERT INTO Ksiazki ('Autor', 'Tytul', 'Cena') VALUES 
+					<div class="fragment">
+						<pre><code class="sql" data-trim>INSERT INTO Ksiazki ('Autor', 'Tytul', 'Cena') VALUES 
   ('Joseph Heller', 'Paragraf 22', 19.99),
   (NULL, 'Biblia', 199.99);</code></pre>
-			</section>
+					</div>
+				</section>
+
+				<section>
+					<h3>Data Manipulation Language - DELETE</h3> <br>
+					<h4>Składnia</h4>
+					<pre><code class="sql" data-trim>DELETE FROM tabela [WHERE warunek];
+</code></pre>
+					<div class="fragment">
+						<h4>Przykład</h4>
+						<pre><code class="sql" data-trim>DELETE FROM Ksiazki WHERE Autor IS NUll;</code></pre>
+					</div>
+				</section>
+
+								<section>
+					<h3>Data Manipulation Language - UPDATE</h3> <br>
+					<h4>Składnia</h4>
+					<pre><code class="sql" data-trim>UPDATE tabela 
+  SET atrybut1 = wartość [,atrybut2 = wartość,...]
+  [WHERE warunek];
+
+UPDATE tabela 
+  SET (atrybut1, atrybut2,...) = (wartość, wartość,...) 
+  [WHERE warunek];
+
+</code></pre>
+					<div class="fragment">
+						<h4>Przykład</h4>
+						<pre><code class="sql" data-trim>UPDATE Ksiazki 
+  SET Cena = 12.99 
+  WHERE Autor = 'Joseph Heller';</code></pre>
+					</div>
+				</section>
+
+
 			</section>
 
-			<!--Slide 4-->
+			<!--Slide 5-->
 			<section>
-				<h2>Data Query Language - Składnia</h2> <br>
-				<pre><code class="sql" data-trim>SELECT *
- FROM  Ksiazki
+				<h3>Data Query Language</h3> <br>
+				<h4>Składnia</h4>
+				<pre><code class="sql" data-trim>SELECT * FROM tabela WHERE warunek;
+</code></pre>
+				<div class="fragment">
+					<h4>Przykład</h4>
+					<pre><code class="sql" data-trim>SELECT *
+ FROM Ksiazki
  WHERE cena > 100.00
  ORDER BY Tytul;</code></pre>
-
- <table style="font-size:20px; background-color:white;" ><thead><tr><th>Id</th><th>Autor</th><th>Tytul</th><th>Cena</th></tr></thead><tbody><tr><td>2</td><td></td><td>Biblia</td><td>199.99</td></tr></tbody></table>
+				</div>
+				<table style="font-size:20px; background-color:white;" class="fragment">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Autor</th>
+							<th>Tytul</th>
+							<th>Cena</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>2</td>
+							<td></td>
+							<td>Biblia</td>
+							<td>199.99</td>
+						</tr>
+					</tbody>
+				</table>
 			</section>
 
 		</div>
