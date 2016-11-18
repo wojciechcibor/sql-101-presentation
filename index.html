@@ -210,7 +210,7 @@ INSERT INTO Ksiazki ('Tytul', 'Cena')
 					</div>
 				</section>
 
-								<section>
+				<section>
 					<h3>Data Manipulation Language - UPDATE</h3> <br>
 					<h4>Składnia</h4>
 					<pre><code class="sql" data-trim>UPDATE tabela 
@@ -237,14 +237,18 @@ UPDATE tabela
 			<section>
 				<h3>Data Query Language</h3> <br>
 				<h4>Składnia</h4>
-				<pre><code class="sql" data-trim>SELECT * FROM tabela WHERE warunek;
+				<pre><code class="sql" data-trim>SELECT * FROM tabela 
+  [WHERE warunek] 
+  [GROUP BY kolumna]
+  [HAVING warunek]
+  [ORDER BY kolumna];
 </code></pre>
 				<div class="fragment">
 					<h4>Przykład</h4>
 					<pre><code class="sql" data-trim>SELECT *
  FROM Ksiazki
  WHERE cena > 100.00
- ORDER BY Tytul;</code></pre>
+ ORDER BY Tytul DESC;</code></pre>
 				</div>
 				<table style="font-size:20px; background-color:white;" class="fragment">
 					<thead>
@@ -266,6 +270,132 @@ UPDATE tabela
 				</table>
 			</section>
 
+			<!--Slide 6-->
+			<section>
+				<section>
+					<h3>Klauzula WHERE</h3>
+					<h4>Operatory</h4>
+					<pre><code class="sql" data-trim>=, <>, >, >=, <, <=, IN, BETWEEN, LIKE, IS NULL or IS NOT NULL</code></pre>
+					<div class="fragment">
+						<h4>Przykłady</h4>
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE cena > 100.00;</code></pre>
+						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor = 'Joseph Heller';</code></pre>
+						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor LIKE 'Joseph%';
+SELECT * FROM Ksiazki WHERE Autor NOT LIKE 'Joseph%';</code></pre>
+						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor IN in ('Anna', 'Alicja');
+SELECT * FROM Ksiazki WHERE Autor NOT IN in ('Anna', 'Alicja');</code></pre>
+						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Data between '2016-11-01' and '2016-11-18'</code></pre>
+						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor IS NULL;
+SELECT * FROM Ksiazki WHERE Autor IS NOT NULL;</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h3>Klauzula WHERE, CD</h3>
+					<p>Operatory w klauzuli WHERE możemy łączyć, korzystając z operatorów logicznych OR i AND</p>
+					<div>
+						<h4>Przykład</h4>
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki
+  WHERE (Autor = 'Anna' OR Autor='Alicja') 
+  AND Cena <= 99.99;</code></pre>
+					</div>
+				</section>
+			</section>
+			<!--Slide 7-->
+			<section>
+				<h3>Sortowanie wyników</h3>
+			</section>
+
+			<!--Slide 7-->
+			<section>
+				<h3>Duplikaty</h3>
+			</section>
+
+			<!--Slide 7-->
+			<section>
+				<h3>Klauzule LIMIT/OFFSET</h3>
+			</section>
+
+			<!--Slide 8-->
+			<section>
+				<h3>Funkcje Agregujące</h3>
+				<table style="font-size:20px; background-color:white;color: black;">
+					<thead>
+						<tr>
+							<th>Nazwa funkcji</th>
+							<th>Opis</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>avg(x)</td>
+							<td>Średnia arytmetyczna</td>
+						</tr>
+						<tr>
+							<td>count(*)</td>
+							<td>liczba wierszy spełniających okreslone warunki</td>
+						</tr>
+						<tr>
+							<td>count(x)</td>
+							<td>liczba wierszy, w których kolumna x ma wartość różną od null</td>
+						</tr>
+						<tr>
+							<td>max(x)</td>
+							<td>maksimum</td>
+						</tr>
+						<tr>
+							<td>min(x)</td>
+							<td>minimum</td>
+						</tr>
+						<tr>
+							<td>stddev(x)</td>
+							<td>odchylenie standardowe</td>
+						</tr>
+						<tr>
+							<td>sum(x)</td>
+							<td>suma</td>
+						</tr>
+						<tr>
+							<td>variance(x)</td>
+							<td>wariancja
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class="fragment">
+					<br>
+					<h4>Przykład</h4>
+					<pre><code class="sql" data-trim>SELECT count(*) FROM Ksiazki;</code></pre>
+				</div>
+			</section>
+
+			<!--Slide 9-->
+			<section>
+				<h3>Klauzula GROUP BY</h3>
+			</section>
+
+			<!--Slide 10-->
+			<section>
+				<h3>Klauzula HAVING</h3>
+			</section>
+
+			<!--Slide 10-->
+			<section>
+				<h3>Iloczyn kartezjański</h3><br>
+
+				<p>
+					Iloczyn kartezjanski definiuje się dla dowolnych relacji.
+				</p><img src="img/cartesianProduct.png">
+				<h4>Przykład</h4>
+				<pre><code class="sql" data-trim>SELECT * FROM S, R;
+</code></pre>
+			</section>
+
+			<!--Slide 10-->
+			<section>
+				<h3>Złączenie</h3>
+			</section>
 		</div>
 	</div>
 
