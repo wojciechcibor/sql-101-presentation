@@ -130,7 +130,7 @@
 							<ul style="font-size:20px;" class="white">
 								<li><code>DATE</code></li>
 								<li><code>TIME</code></li>
-								<li><code>TIMESTAMP</code></li>
+								<li><code>DATETIME</code></li>
 							</ul>
 						</p>
 					</div>
@@ -300,16 +300,14 @@ UPDATE tabela
 					<h3>Klauzula WHERE</h3>
 					<h4>Operatory</h4>
 					<pre><code class="sql" data-trim>=, <>, >, >=, <, <=, IN, BETWEEN, LIKE, IS NULL or IS NOT NULL</code></pre>
-					<div class="fragment">
+					<div>
 						<h4>Przykłady</h4>
 						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE cena > 100.00;</code></pre>
-						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor = 'Joseph Heller';</code></pre>
-						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor LIKE 'Joseph%';
-SELECT * FROM Ksiazki WHERE Autor NOT LIKE 'Joseph%';</code></pre>
-						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor IN in ('Anna', 'Alicja');
-SELECT * FROM Ksiazki WHERE Autor NOT IN in ('Anna', 'Alicja');</code></pre>
-						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Data between '2016-11-01' and '2016-11-18'</code></pre>
-						<pre class="fragment"><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor IS NULL;
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor = 'Joseph Heller';</code></pre>
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor IN IN ('Anna', 'Alicja');
+SELECT * FROM Ksiazki WHERE Autor NOT IN IN ('Anna', 'Alicja');</code></pre>
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Data BETWEEN '2016-11-01' AND '2016-11-18'</code></pre>
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor IS NULL;
 SELECT * FROM Ksiazki WHERE Autor IS NOT NULL;</code></pre>
 					</div>
 				</section>
@@ -324,7 +322,46 @@ SELECT * FROM Ksiazki WHERE Autor IS NOT NULL;</code></pre>
   AND Cena <= 99.99;</code></pre>
 					</div>
 				</section>
+
+				<section>
+					<h3>Klauzula WHERE, CD</h3>
+					<p style="font-size:20px;">Operator Like porównuje wzorzec z całym łancuchem znaków. Jeżeli chcemy wyszukać jakiś fragment w srodku napisu, należy
+						na począatku i na końncu wzorca umieścić znak %. Definiując wzorzec jako znaki specjalne uzywane są: % – dowolny ciag
+						znaków, _ – pojedynczy znak.</p>
+					<div>
+						<h4>Przykłady</h4>
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor LIKE 'Joseph%';</code></pre>
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor LIKE '%o%';</code></pre>
+						<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Autor LIKE '_oseph%';</code></pre>
+					</div>
+				</section>
 			</section>
+
+			<!--Slide 7-->
+			<section>
+				<section>
+					<h3>Operacje artytmetyczne</h3>
+					<small> W zapytaniach można stosowac wybrane operatory artytmetyczne: +, -, *, /, %.
+				</small>
+					<h4><br>Przykłady</h4>
+					<pre><code class="sql" data-trim>SELECT (2*2+4)/8;</code></pre>
+					<pre><code class="sql" data-trim>SELECT Cena*100 FROM Ksiazki WHERE Autor LIKE 'Joseph%';</code></pre>
+					<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE Cena = 100%2;</code></pre>
+
+				</section>
+
+				<section>
+					<h3>Operacje na typach czasowych</h3>
+					</small>
+					<h4><br>Przykłady</h4>
+					<pre><code class="sql" data-trim>SELECT date('now');</code></pre>
+					<pre><code class="sql" data-trim>SELECT time('now');</code></pre>
+					<pre><code class="sql" data-trim>SELECT date('now','-2 years','+1 month', '-1 day');</code></pre>
+					<pre><code class="sql" data-trim>SELECT date('now','start of month','+1 month','-1 day');</code></pre>
+					<pre><code class="sql" data-trim>SELECT * FROM Ksiazki WHERE DataWydania > date('now','-2 years');</code></pre>
+				</section>
+			</section>
+
 			<!--Slide 7-->
 			<section>
 				<h3>Sortowanie wyników</h3>
@@ -340,6 +377,21 @@ SELECT * FROM Ksiazki WHERE Autor IS NOT NULL;</code></pre>
 			<!--Slide 7-->
 			<section>
 				<h3>Duplikaty</h3>
+				<small>Występowanie duplikatów powoduje pewne okreslone konsekwencje:</small>
+				<ul style="font-size:20px;">
+					<li>Obiekty opisywane takimi krotkami nie są rozróznialne, a więc celowość reprezentowania więcej niż jednego takiego obiektu
+						jest wątpliwa</li>
+					<li>Usuwając informacją o takim obiekcie z bazy nalezy wyraźnie sprecyzować, czy chodzi nam o usunięcie jednego jej wystąpienia,
+						dwóch, trzech, itd., czy tez wszystkich</li>
+					<li>W wyniku realizacji pewnych operacji na takich tabelach (np. złozenia lub iloczynu kartezjanskiego) następuje niekontrolowane
+						i nie zawsze celowe powielanie informacji.</li>
+				</ul>
+
+				<small style="margin-top:30px;">Stosując klauzulę <span class="red">distinct on ()</span> można wskazać na podstawie jakich elementów krotki będą traktowane jako duplikaty. W wyniku zostanie umieszczony pierwszy element z kazdej z grup.</small>
+
+				<h4><br>Przykłady</h4>
+				<pre><code class="sql" data-trim>SELECT DISTINCT * FROM Ksiazki;</code></pre>
+				<pre><code class="sql" data-trim>SELECT DISTINCT ON (Autor) * FROM Ksiazki;</code></pre>
 			</section>
 
 			<!--Slide 7-->
@@ -437,9 +489,8 @@ przed obliczaniem wartosci funkcji agregującej </small>
 						<span class="white">HAVING</span> słuzy do selekcji grup rekordów po tym jak zostaną one pogrupowane i wyznaczone są
 						wartości funkcji agregujących.</li>
 					<li>W klauzuli <span class="white">HAVING</span> mozna agregować dowolne atrybuty relacji wymienionych w klauzuli
-						<span
-							class="white">FROM</span>, ale bez agregacji w klauzuli <span class="white">HAVING</span> mogą wystąpić tylko te atrybuty, które
-							wymieniono w klauzuli <span class="white">GROUP BY</span>.</li>
+						<span class="white">FROM</span>, ale bez agregacji w klauzuli <span class="white">HAVING</span> mogą wystąpić tylko
+						te atrybuty, które wymieniono w klauzuli <span class="white">GROUP BY</span>.</li>
 				</ul>
 
 				<div style="margin-top:20px;">
@@ -452,25 +503,72 @@ przed obliczaniem wartosci funkcji agregującej </small>
 
 			<!--Slide 10-->
 			<section>
-				<h3>Iloczyn kartezjański</h3><br>
+				<section>
+					<h3>Łączenie zapytań</h3>
+					<p style="font-size:20px;">Operacje sumy, przecięcia (iloczynu) i róznicy odpowiadają odpowiednim operacjom algebry zbiorów. Są one wykonywane
+						na relacjach (zbiorach krotek). Relacje będące operandami muszą miec ten sam schemat z dokładnością do dziedzin atrybutów.</p>
+					</p><img src="img/algebra.png">
+				</section>
 
+				<section>
+					<h3>Łączenie zapytań, CD</h3>
+					<h4>Składnia</h4>
+					<pre><code class="sql" data-trim>select ...
+union | intersect | except
+select ... ;</code></pre>
+
+					<div>
+						<h4>Przykład</h4>
+						<pre><code class="sql" data-trim>SELECT Autor FROM Ksiazki WHERE cena > 100.00
+  UNION
+  SELECT Autor FROM Ksiazki WHERE cena < 50.00;
+  </code></pre>
+					</div>
+
+					<p style="font-size:20px; margin-top: 30px;">Uzycie operatora union (również intersect i except) powoduje usunięcie duplikatów z wyniku. Operatory te mają wersję
+						z przyrostkiem all (np. union all), której użycie powoduje zaniechanie usuwania duplikatów.</p>
+				</section>
+
+			</section>
+
+			<!--Slide 10-->
+			<section>
+				<h3>Iloczyn kartezjański</h3>
 				<p>
 					Iloczyn kartezjanski definiuje się dla dowolnych relacji.
 				</p><img src="img/cartesianProduct.png">
 				<h4>Przykład</h4>
-				<pre><code class="sql" data-trim>SELECT * FROM S, R;
+				<pre><code class="sql" data-trim>SELECT * FROM S, R;</code></pre>
+			</section>
+
+			<!--Slide 10-->
+			<section>
+				<section>
+					<h3>Złączenia</h3>
+					<p style="font-size:22px; margin-top: 30px;">
+						Złączenie θ jest dwuargumentowym działaniem na relacjach. Relacja wynikowa R x θS zawiera krotki powstałe z połączenia pary
+						krotek (pierwsza z relacji R druga z S), które spełniają warunek logiczny θ.
+					</p><img src="img/join.png">
+					<h4>Składnia</h4>
+					<pre><code class="sql" data-trim>SELECT ... FROM tabela1 JOIN tabela2 ON warunek;
+SELECT ... FROM tabela1 JOIN tabela2 USING(atrybut1,atrybut2,...);</code></pre>
+				</section>
+
+				<section>
+					<h3>Złączenia, CD</h3>
+					<p style="font-size:22px; margin-top: 30px;">Mozliwe jest użycie tej samej relacji wielokrotnie w zapytaniu, ale wymaga to zastosowania indywidualnych aliasów dla
+						każdej kopii.
+
+					</p><img src="img/mecze.png">
+					<h4>Składnia</h4>
+					<pre><code class="sql" data-trim>SELECT d1.nazwa, d2.nazwa, termin
+  FROM druzyny d1 JOIN mecze ON d1.iddruzyny = gospodarze
+  JOIN druzyny d2 ON d2.iddruzyny = goscie;
 </code></pre>
+				</section>
 			</section>
 
-			<!--Slide 10-->
-			<section>
-				<h3>Złączenia</h3>
-			</section>
 
-			<!--Slide 10-->
-			<section>
-				<h3>Transakcje</h3>
-			</section>
 			</div>
 		</div>
 
