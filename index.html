@@ -412,11 +412,42 @@ przed obliczaniem wartosci funkcji agregującej </small>
 			<!--Slide 9-->
 			<section>
 				<h3>Klauzula GROUP BY</h3>
+				<ul style="font-size:24px;">
+					<li>Klauzula group by słuzy do grupowania (podziału na rozłąaczne podzbiory) krotek będących wynikiem selekcji (wynik działania
+						klauzuli <span class="white">WHERE</span>)</li>
+					<li>Klauzula group by musi wystąpic bezpośrednio po klauzulach <span class="white">FROM</span> lub <span class="white">WHERE</span></li>
+					<li>Zastosowanie klauzuli <span class="white">GROUP BY</span> oznacza, ze wybierane atrybuty mogą wystąpić wyłącznie jako
+						argumenty funkcji agregujących lub jako element grupowania.</li>
+				</ul>
+
+				<div style="margin-top:20px;">
+					<h4>Przykład</h4>
+					<pre><code class="sql" data-trim>SELECT Autor, count(*) 
+  FROM Ksiazki 
+  GROUP BY Autor;</code></pre>
+				</div>
 			</section>
 
 			<!--Slide 10-->
 			<section>
 				<h3>Klauzula HAVING</h3>
+				<ul style="font-size:24px;">
+					<li>Klauzula <span class="white">WHERE</span> słuzy do selekcji rekordów, które nast˛epnie poddawane są grupowaniu i używane
+						są do obliczeń. Klauzula
+						<span class="white">HAVING</span> słuzy do selekcji grup rekordów po tym jak zostaną one pogrupowane i wyznaczone są
+						wartości funkcji agregujących.</li>
+					<li>W klauzuli <span class="white">HAVING</span> mozna agregować dowolne atrybuty relacji wymienionych w klauzuli
+						<span
+							class="white">FROM</span>, ale bez agregacji w klauzuli <span class="white">HAVING</span> mogą wystąpić tylko te atrybuty, które
+							wymieniono w klauzuli <span class="white">GROUP BY</span>.</li>
+				</ul>
+
+				<div style="margin-top:20px;">
+					<h4>Przykład</h4>
+					<pre><code class="sql" data-trim>SELECT Autor, count(*) 
+  FROM Ksiazki 
+  GROUP BY Autor
+  HAVING count(*) > 1;</code></pre>
 			</section>
 
 			<!--Slide 10-->
@@ -440,13 +471,13 @@ przed obliczaniem wartosci funkcji agregującej </small>
 			<section>
 				<h3>Transakcje</h3>
 			</section>
+			</div>
 		</div>
-	</div>
 
-	<script src="lib/js/head.min.js"></script>
-	<script src="js/reveal.js"></script>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
 
-	<script>
+		<script>
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
